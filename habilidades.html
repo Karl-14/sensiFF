@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendador de Habilidades - Free Fire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .combo-result {
+            font-size: 1.2em;
+            background-color: #e7f7e7;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recomendador de Habilidades para Free Fire</h1>
+
+        <!-- Selección de estilo de juego -->
+        <h2>Selecciona tu estilo de juego</h2>
+        <select id="gameStyle">
+            <option value="rusher">Rusher</option>
+            <option value="granadero">Granadero</option>
+            <option value="soporte_dano">Soporte de Daño</option>
+            <option value="soporte_curacion">Soporte de Curación</option>
+            <option value="soporte_rush">Soporte-Rush</option>
+            <option value="francotirador">Francotirador</option>
+        </select>
+
+        <!-- Botón para generar combo -->
+        <button onclick="generarCombo()">Generar Combo</button>
+
+        <!-- Contenedor para mostrar el resultado -->
+        <div id="comboResult" class="combo-result"></div>
+
+        <!-- Categorías específicas -->
+        <h2>Otras recomendaciones específicas</h2>
+        <select id="specificCategory">
+            <option value="curacion_rapida">Curación Rápida</option>
+            <option value="mucha_proteccion">Mucha Protección</option>
+            <option value="mucha_vida">Mucha Vida</option>
+            <option value="mucho_dano">Mucho Daño</option>
+        </select>
+
+        <!-- Botón para generar combo por categoría específica -->
+        <button onclick="generarComboEspecifico()">Generar Combo Específico</button>
+
+        <!-- Contenedor para mostrar el resultado específico -->
+        <div id="comboEspecificoResult" class="combo-result"></div>
+    </div>
+
+    <script>
+        // Combos predefinidos por estilo de juego
+        const combos = {
+            rusher: [
+                { activa: 'Tatsuya', pasivas: ['Nairi', 'Luna', 'Woolfrah'] },
+                { activa: 'Tatsuya', pasivas: ['Kaioros', 'Andrew', 'Antonio'] },
+                { activa: 'Alok', pasivas: ['Luna', 'Shani', 'Woolfrah'] }
+            ],
+            granadero: [
+                { activa: 'Steffie', pasivas: ['Alvaro', 'Moco', 'Otho'] },
+                { activa: 'Tatsuya', pasivas: ['Alvaro', 'Shirou', 'Nikita'] },
+                { activa: 'Chrono', pasivas: ['Alvaro', 'Nikita', 'Otho'] }
+            ],
+            soporte_dano: [
+                { activa: 'Iris', pasivas: ['Moco', 'Maro', 'Otho'] },
+                { activa: 'Skyler', pasivas: ['Maro', 'Nikita', 'Rafael'] }
+            ],
+            soporte_curacion: [
+                { activa: 'Steffie', pasivas: ['Thiva', 'Kapella', 'Nairi'] },
+                { activa: 'Kassie', pasivas: ['Olivia', 'Moco', 'Nikita'] }
+            ],
+            soporte_rush: [
+                { activa: 'Tatsuya', pasivas: ['Shani', 'Otho', 'Nikita'] },
+                { activa: 'A124', pasivas: ['Andrew', 'Otho', 'Maro'] }
+            ],
+            francotirador: [
+                { activa: 'Iris', pasivas: ['Maro', 'Moco', 'Rafael'] },
+                { activa: 'Skyler', pasivas: ['Nikita', 'Maro', 'Rafael'] }
+            ]
+        };
+
+        // Combos predefinidos por categorías específicas
+        const specificCombos = {
+            curacion_rapida: [
+                { activa: 'K', pasivas: ['León', 'Ford', 'Nairi'] },
+                { activa: 'K', pasivas: ['Antonio', 'Nairi', 'Olivia'] }
+            ],
+            mucha_proteccion: [
+                { activa: 'Kenta', pasivas: ['Justin Bieber', 'Andrew', 'Woolfrah'] },
+                { activa: 'Steffie', pasivas: ['Andrew', 'Hayato', 'Justin Bieber'] }
+            ],
+            mucha_vida: [
+                { activa: 'Xayne', pasivas: ['Shani', 'Antonio', 'Luqueta'] },
+                { activa: 'K', pasivas: ['Luqueta', 'Antonio', 'Ford'] }
+            ],
+            mucho_dano: [
+                { activa: 'Iris', pasivas: ['Kaioros', 'Maro', 'Luna'] },
+                { activa: 'Homero', pasivas: ['Kaioros', 'Woolfrah', 'Hayato'] }
+            ]
+        };
+
+        // Función para generar combo según el estilo de juego
+        function generarCombo() {
+            const estilo = document.getElementById('gameStyle').value;
+            const combo = combos[estilo][Math.floor(Math.random() * combos[estilo].length)];
+            document.getElementById('comboResult').innerHTML = 
+                `Habilidad activa: ${combo.activa}. Habilidades pasivas: ${combo.pasivas.join(', ')}.`;
+        }
+
+        // Función para generar combo específico
+        function generarComboEspecifico() {
+            const categoria = document.getElementById('specificCategory').value;
+            const combo = specificCombos[categoria][Math.floor(Math.random() * specificCombos[categoria].length)];
+            document.getElementById('comboEspecificoResult').innerHTML = 
+                `Habilidad activa: ${combo.activa}. Habilidades pasivas: ${combo.pasivas.join(', ')}.`;
+        }
+    </script>
+</body>
+</html>

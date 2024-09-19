@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Sensibilidad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1d1d1d;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background-color: #333;
+            padding: 40px;
+            border-radius: 10px;
+            width: 350px; /* Más estrecho */
+            height: 700px; /* Más largo */
+            position: relative;
+        }
+        .slider-container {
+            margin-bottom: 15px;
+        }
+        .slider-label {
+            margin-bottom: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #444;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .interactive {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #ff9800;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #ff5722;
+        }
+        input[type="text"], input[type="email"], textarea {
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .communication-form {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            width: 350px;
+        }
+        .communication-form h2 {
+            margin-top: 0;
+        }
+        .agregar-texto {
+            position: absolute;
+            bottom: 60px; /* Ajustado para estar más arriba */
+            left: 20px;
+            color: #ff9800;
+            font-size: 18px;
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="interactive">
+            <label for="dispositivo">Especifica tu dispositivo móvil:</label>
+            <input type="text" id="dispositivo" placeholder="Escribe el nombre de tu dispositivo">
+        </div>
+
+        <button id="crearSensibilidad">Crear Sensibilidad</button>
+
+        <div class="result" id="result">
+            <p>Presiona "Crear Sensibilidad" para generar los valores.</p>
+        </div>
+        
+        <!-- Texto actualizado -->
+        <div class="agregar-texto">
+            Recuerda practicar un poco con la sensibilidad para garantizar su uso.
+        </div>
+    </div>
+
+    <!-- Formulario de comunicación -->
+    <div class="communication-form">
+        <h2>Informa errores</h2>
+        <form id="formComunicacion" method="POST" action="mailto:carlosroman3141@gmail.com">
+            <label for="gmail">Correo electrónico (Gmail):</label>
+            <input type="email" id="gmail" name="gmail" placeholder="Escribe tu Gmail" required>
+
+            <label for="comentario">Comentario:</label>
+            <textarea id="comentario" name="comentario" placeholder="Escribe tu comentario"></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+        © 2024 Todos los derechos reservados.
+    </footer>
+
+    <script>
+        function generarSensibilidad() {
+            const dispositivoInput = document.getElementById("dispositivo").value.trim();
+            const resultDiv = document.getElementById("result");
+
+            if (dispositivoInput === "") {
+                resultDiv.innerHTML = `<p style="color: #ff9800;">Por favor, especifica el nombre de tu dispositivo móvil.</p>`;
+                return;
+            }
+
+            const min = 1;
+            const max = 200;
+
+            // Generar valores de sensibilidad
+            const sensibilidad = {
+                general: Math.floor(Math.random() * (max - min + 1)) + min,
+                puntoRojo: Math.floor(Math.random() * (max - min + 1)) + min,
+                mira2x: Math.floor(Math.random() * (max - min + 1)) + min,
+                mira4x: Math.floor(Math.random() * (max - min + 1)) + min,
+                miraFranco: Math.floor(Math.random() * (max - min + 1)) + min,
+                camara360: Math.floor(Math.random() * (max - min + 1)) + min,
+                dpi: Math.floor(Math.random() * (1000 - 440 + 1)) + 440
+            };
+
+            // Mostrar los resultados
+            resultDiv.innerHTML = `
+                <p>General: ${sensibilidad.general}%</p>
+                <p>Mira de Punto Rojo: ${sensibilidad.puntoRojo}%</p>
+                <p>Mira 2x: ${sensibilidad.mira2x}%</p>
+                <p>Mira 4x: ${sensibilidad.mira4x}%</p>
+                <p>Mira Francotirador: ${sensibilidad.miraFranco}%</p>
+                <p>Cámara 360°: ${sensibilidad.camara360}%</p>
+                <p>DPI: ${sensibilidad.dpi}</p>
+            `;
+        }
+
+        document.getElementById("crearSensibilidad").addEventListener("click", generarSensibilidad);
+    </script>
+</body>
+</html>
